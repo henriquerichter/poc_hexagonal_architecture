@@ -12,6 +12,12 @@
   <groupId>com.test</groupId>
   <artifactId>test</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <modules>
+    <module>application</module>
+    <module>domain</module>
+    <module>infrastructure</module>
+  </modules>
   <name>test</name>
 
   <properties>
@@ -49,15 +55,6 @@
     </dependency>
   </dependencies>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-
-    </plugins>
-  </build>
   <repositories>
     <repository>
       <id>spring-milestones</id>
