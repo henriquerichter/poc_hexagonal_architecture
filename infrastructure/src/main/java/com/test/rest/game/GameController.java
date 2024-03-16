@@ -3,7 +3,9 @@ package com.test.rest.game;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.time.LocalDate;
+import java.util.List;
 
+import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,6 +46,7 @@ public class GameController {
   }
 
   @PostMapping
+  @RegisterReflectionForBinding(classes = { CreateGameUseCase.Out.class }) // native
   public ResponseEntity<?> create(@RequestBody NewGameDTO newGameDTO) {
     try {
       CreateGameUseCase.Out output = createGameUseCase
@@ -56,31 +59,31 @@ public class GameController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<?> getById(@PathVariable Long id) {
+  public ResponseEntity<GetGameByIdUseCase.Out> getById(@PathVariable Long id) {
     return getGameByIdUseCase.execute(new GetGameByIdUseCase.In(id))
         .map(ResponseEntity::ok)
         .orElse(ResponseEntity.notFound().build());
   }
 
   @GetMapping("/name/{name}")
-  public ResponseEntity<?> getByName(@PathVariable String name) {
+  public ResponseEntity<GetGameByNameUseCase.Out> getByName(@PathVariable String name) {
     return getGameByNameUseCase.execute(new GetGameByNameUseCase.In(name))
         .map(ResponseEntity::ok)
         .orElse(ResponseEntity.notFound().build());
   }
 
   @GetMapping("/releaseDate/{releaseDate}")
-  public ResponseEntity<?> getByReleaseDate(@PathVariable LocalDate releaseDate) {
+  public ResponseEntity<List<GetGamesByReleaseDateUseCase.Out>> getByReleaseDate(@PathVariable LocalDate releaseDate) {
     return ResponseEntity.ok(getGamesByReleaseDateUseCase.execute(new GetGamesByReleaseDateUseCase.In(releaseDate)));
   }
 
   @GetMapping("/price/{price}")
-  public ResponseEntity<?> getByPrice(@PathVariable BigDecimal price) {
+  public ResponseEntity<List<GetGamesByPriceUseCase.Out>> getByPrice(@PathVariable BigDecimal price) {
     return ResponseEntity.ok(getGameByPriceUseCase.execute(new GetGamesByPriceUseCase.In(price)));
   }
 
   @GetMapping("/all")
-  public ResponseEntity<?> getAll() {
+  public ResponseEntity<List<GetGamesUseCase.Out>> getAll() {
     return ResponseEntity.ok(getGamesUseCase.execute(new GetGamesUseCase.In()));
   }
 }

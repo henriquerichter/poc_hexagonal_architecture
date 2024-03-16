@@ -1,5 +1,6 @@
 package com.test;
 
+import java.lang.management.ManagementFactory;
 import java.util.logging.Logger;
 
 import org.springframework.boot.SpringApplication;
@@ -14,5 +15,6 @@ public class Main {
     SpringApplication.run(Main.class, args);
 
     LOG.info("main()");
+    LOG.info("Arguments: " + ManagementFactory.getRuntimeMXBean().getInputArguments());
   }
 }

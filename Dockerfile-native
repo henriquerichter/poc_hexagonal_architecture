@@ -1,0 +1,14 @@
+FROM ghcr.io/graalvm/native-image-community:21 AS native-build
+
+ENV APP_HOME=/usr/app
+
+RUN mkdir -p $APP_HOME
+WORKDIR $APP_HOME
+COPY . $APP_HOME
+RUN --mount=type=cache,target=/root/.m2 ./mvnw -f $APP_HOME/pom.xml -Pnative package -DskipTests
+
+FROM debian:trixie-slim AS native
+
+COPY --from=native-build "/usr/app/infrastructure/target/infrastructure" app
+
+ENTRYPOINT [ "./app" ]
