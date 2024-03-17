@@ -20,7 +20,7 @@ public class GetGamesUseCase extends UseCase<GetGamesUseCase.In, List<GetGamesUs
 
   @Override
   public List<Out> execute(In in) {
-    return gameService.games()
+    return this.gameService.games()
         .stream()
         .map(game -> new Out(
             game.getId().value(),

@@ -20,7 +20,7 @@ public class GetGameByNameUseCase extends UseCase<GetGameByNameUseCase.In, Optio
 
   @Override
   public Optional<Out> execute(In in) {
-    return gameService.gameOfName(in.name())
+    return this.gameService.gameOfName(in.name())
         .map(game -> new Out(
             game.getId().value(),
             game.getName().value(),

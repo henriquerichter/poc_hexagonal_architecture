@@ -20,7 +20,7 @@ public class GetGameByIdUseCase extends UseCase<GetGameByIdUseCase.In, Optional<
 
   @Override
   public Optional<Out> execute(In input) {
-    return gameService.gameOfId(input.id())
+    return this.gameService.gameOfId(input.id())
         .map(game -> new Out(
             game.getId().value(),
             game.getName().value(),

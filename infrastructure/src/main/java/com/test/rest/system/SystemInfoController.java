@@ -17,6 +17,10 @@ public class SystemInfoController {
 
   @GetMapping("/system-info")
   public ResponseEntity<GetSystemInfoUseCase.Out> systemInfo() {
-    return ResponseEntity.ok().body(getSystemInfoUseCase.execute(new GetSystemInfoUseCase.In()));
+    GetSystemInfoUseCase.In in = new GetSystemInfoUseCase.In();
+
+    GetSystemInfoUseCase.Out out = this.getSystemInfoUseCase.execute(in);
+
+    return ResponseEntity.ok().body(out);
   }
 }

@@ -20,11 +20,11 @@ public class CreateGameUseCase extends UseCase<CreateGameUseCase.In, CreateGameU
 
   @Override
   public Out execute(In input) {
-    if (gameService.gameOfName(input.name()).isPresent()) {
+    if (this.gameService.gameOfName(input.name()).isPresent()) {
       throw new IllegalArgumentException("Game with name " + input.name() + " already exists");
     }
 
-    Game createdGame = gameService.create(new Game(input.name(), input.releaseDate(), input.price()));
+    Game createdGame = this.gameService.create(new Game(input.name(), input.releaseDate(), input.price()));
 
     return new Out(
         createdGame.getId().value(),

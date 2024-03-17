@@ -21,7 +21,7 @@ public class GetGamesByReleaseDateUseCase
 
   @Override
   public List<Out> execute(In in) {
-    return gameService.gamesOfReleaseDate(in.releaseDate())
+    return this.gameService.gamesOfReleaseDate(in.releaseDate())
         .stream()
         .map(game -> new Out(
             game.getId().value(),

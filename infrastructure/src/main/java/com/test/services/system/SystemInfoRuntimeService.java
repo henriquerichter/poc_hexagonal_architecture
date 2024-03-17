@@ -10,12 +10,11 @@ public class SystemInfoRuntimeService implements SystemInfoService {
 
   @Override
   public SystemInfo getSystemInfo() {
-    SystemInfo systemInfo = new SystemInfo(
+    return new SystemInfo(
         Runtime.getRuntime().availableProcessors(),
         Runtime.getRuntime().totalMemory(),
         Runtime.getRuntime().freeMemory(),
         Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory(),
         Runtime.getRuntime().maxMemory());
-    return systemInfo;
   }
 }

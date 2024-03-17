@@ -10,7 +10,7 @@ public record SystemInfo(int cpuCount, long totalMemory, long freeMemory, long a
     this.maxMemory = bytesToMegabytes(maxMemory);
   }
 
-  public long bytesToMegabytes(long bytes) {
+  private long bytesToMegabytes(long bytes) {
     return bytes / (1024 * 1024);
   }
 }

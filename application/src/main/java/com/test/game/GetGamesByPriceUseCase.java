@@ -20,7 +20,7 @@ public class GetGamesByPriceUseCase extends UseCase<GetGamesByPriceUseCase.In, L
 
   @Override
   public List<Out> execute(In input) {
-    return gameService.gamesOfPrice(input.price())
+    return this.gameService.gamesOfPrice(input.price())
         .stream()
         .map(game -> new Out(
             game.getId().value(),
