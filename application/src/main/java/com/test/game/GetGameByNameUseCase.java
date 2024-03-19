@@ -7,20 +7,20 @@ import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 import com.test.UseCase;
-import com.test.domain.game.GameService;
+import com.test.domain.game.GameLibrary;
 
 @Component
 public class GetGameByNameUseCase extends UseCase<GetGameByNameUseCase.In, Optional<GetGameByNameUseCase.Out>> {
 
-  private final GameService gameService;
+  private final GameLibrary gameLibrary;
 
-  public GetGameByNameUseCase(GameService gameService) {
-    this.gameService = gameService;
+  public GetGameByNameUseCase(GameLibrary gameLibrary) {
+    this.gameLibrary = gameLibrary;
   }
 
   @Override
   public Optional<Out> execute(In in) {
-    return this.gameService.gameOfName(in.name())
+    return this.gameLibrary.gameOfName(in.name())
         .map(game -> new Out(
             game.getId().value(),
             game.getName().value(),

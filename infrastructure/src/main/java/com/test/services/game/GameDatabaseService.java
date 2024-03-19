@@ -9,14 +9,14 @@ import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 import com.test.domain.game.Game;
-import com.test.domain.game.GameService;
+import com.test.domain.game.GameLibrary;
 import com.test.jpa.entities.GameEntity;
 import com.test.jpa.repositories.GameJpaRepository;
 
 import jakarta.transaction.Transactional;
 
 @Component
-public class GameDatabaseService implements GameService {
+public class GameDatabaseService implements GameLibrary {
 
   private final GameJpaRepository gameJpaRepository;
 

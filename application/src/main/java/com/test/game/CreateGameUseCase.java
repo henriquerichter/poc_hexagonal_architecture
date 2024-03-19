@@ -7,24 +7,24 @@ import org.springframework.stereotype.Component;
 
 import com.test.UseCase;
 import com.test.domain.game.Game;
-import com.test.domain.game.GameService;
+import com.test.domain.game.GameLibrary;
 
 @Component
 public class CreateGameUseCase extends UseCase<CreateGameUseCase.In, CreateGameUseCase.Out> {
 
-  private final GameService gameService;
+  private final GameLibrary gameLibrary;
 
-  public CreateGameUseCase(GameService gameService) {
-    this.gameService = gameService;
+  public CreateGameUseCase(GameLibrary gameLibrary) {
+    this.gameLibrary = gameLibrary;
   }
 
   @Override
   public Out execute(In input) {
-    if (this.gameService.gameOfName(input.name()).isPresent()) {
+    if (this.gameLibrary.gameOfName(input.name()).isPresent()) {
       throw new IllegalArgumentException("Game with name " + input.name() + " already exists");
     }
 
-    Game createdGame = this.gameService.create(new Game(input.name(), input.releaseDate(), input.price()));
+    Game createdGame = this.gameLibrary.create(new Game(input.name(), input.releaseDate(), input.price()));
 
     return new Out(
         createdGame.getId().value(),

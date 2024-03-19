@@ -12,19 +12,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.test.domain.game.Game;
-import com.test.domain.game.GameService;
+import com.test.domain.game.GameLibrary;
 
 public class GetGameByIdUseCaseTest {
 
   private GetGameByIdUseCase getGameByIdUseCase;
-  private GameService gameService;
+  private GameLibrary gameLibrary;
 
   @BeforeEach
   void setUp() {
-    this.gameService = mock(GameService.class);
-    when(this.gameService.gameOfId(1L))
+    this.gameLibrary = mock(GameLibrary.class);
+    when(this.gameLibrary.gameOfId(1L))
         .thenReturn(Optional.of(new Game(1L, "Game 1", LocalDate.of(2021, 1, 1), new BigDecimal("100.00"))));
-    this.getGameByIdUseCase = new GetGameByIdUseCase(this.gameService);
+    this.getGameByIdUseCase = new GetGameByIdUseCase(this.gameLibrary);
   }
 
   @Test

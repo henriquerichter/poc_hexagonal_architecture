@@ -7,20 +7,20 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.test.UseCase;
-import com.test.domain.game.GameService;
+import com.test.domain.game.GameLibrary;
 
 @Component
 public class GetGamesUseCase extends UseCase<GetGamesUseCase.In, List<GetGamesUseCase.Out>> {
 
-  private final GameService gameService;
+  private final GameLibrary gameLibrary;
 
-  public GetGamesUseCase(GameService gameService) {
-    this.gameService = gameService;
+  public GetGamesUseCase(GameLibrary gameLibrary) {
+    this.gameLibrary = gameLibrary;
   }
 
   @Override
   public List<Out> execute(In in) {
-    return this.gameService.games()
+    return this.gameLibrary.games()
         .stream()
         .map(game -> new Out(
             game.getId().value(),

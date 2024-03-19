@@ -7,21 +7,21 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.test.UseCase;
-import com.test.domain.game.GameService;
+import com.test.domain.game.GameLibrary;
 
 @Component
 public class GetGamesByReleaseDateUseCase
     extends UseCase<GetGamesByReleaseDateUseCase.In, List<GetGamesByReleaseDateUseCase.Out>> {
 
-  private final GameService gameService;
+  private final GameLibrary gameLibrary;
 
-  public GetGamesByReleaseDateUseCase(GameService gameService) {
-    this.gameService = gameService;
+  public GetGamesByReleaseDateUseCase(GameLibrary gameLibrary) {
+    this.gameLibrary = gameLibrary;
   }
 
   @Override
   public List<Out> execute(In in) {
-    return this.gameService.gamesOfReleaseDate(in.releaseDate())
+    return this.gameLibrary.gamesOfReleaseDate(in.releaseDate())
         .stream()
         .map(game -> new Out(
             game.getId().value(),

@@ -14,20 +14,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.test.domain.game.Game;
-import com.test.domain.game.GameService;
+import com.test.domain.game.GameLibrary;
 
 public class CreateGameUseCaseTest {
 
   private CreateGameUseCase createGameUseCase;
-  private GameService gameService;
+  private GameLibrary gameLibrary;
 
   @BeforeEach
   void setUp() {
-    this.gameService = mock(GameService.class);
-    when(this.gameService.gameOfName("Game 1")).thenReturn(Optional.empty());
-    when(this.gameService.create(any(Game.class)))
+    this.gameLibrary = mock(GameLibrary.class);
+    when(this.gameLibrary.gameOfName("Game 1")).thenReturn(Optional.empty());
+    when(this.gameLibrary.create(any(Game.class)))
         .thenReturn(new Game(2L, "Game 1", LocalDate.of(2021, 1, 1), new BigDecimal("100.00")));
-    this.createGameUseCase = new CreateGameUseCase(this.gameService);
+    this.createGameUseCase = new CreateGameUseCase(this.gameLibrary);
   }
 
   @Test
@@ -48,7 +48,7 @@ public class CreateGameUseCaseTest {
   @Test
   void givenInWithExistingGameName_whenExecute_thenThrowIllegalArgumentException() {
     // given
-    when(this.gameService.gameOfName("Game 1"))
+    when(this.gameLibrary.gameOfName("Game 1"))
         .thenReturn(Optional.of(new Game(1L, "Game 1", LocalDate.of(2021, 1, 1), new BigDecimal("100.00"))));
     CreateGameUseCase.In in = new CreateGameUseCase.In("Game 1", LocalDate.of(2021, 1, 1), new BigDecimal("100.00"));
 
