@@ -13,7 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Entity(name = "gameEntity")
+@Entity
 @Table(name = "game")
 public class GameEntity {
 

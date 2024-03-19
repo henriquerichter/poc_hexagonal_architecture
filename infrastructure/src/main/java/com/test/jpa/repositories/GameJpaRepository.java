@@ -5,11 +5,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.test.jpa.entities.GameEntity;
 
-public interface GameJpaRepository extends ListCrudRepository<GameEntity, Long> {
+public interface GameJpaRepository extends JpaRepository<GameEntity, Long> {
 
   Optional<GameEntity> findByName(String name);
 
