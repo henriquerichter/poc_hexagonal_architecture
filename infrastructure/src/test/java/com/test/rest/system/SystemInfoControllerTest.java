@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 
 import com.test.system.GetSystemInfoUseCase;
+import com.test.system.SaveSystemInfoUseCase;
 
 @SpringBootTest
 public class SystemInfoControllerTest {
@@ -21,11 +22,15 @@ public class SystemInfoControllerTest {
   private SystemInfoController systemInfoController;
   @Mock
   private GetSystemInfoUseCase getSystemInfoUseCase;
+  @Mock
+  private SaveSystemInfoUseCase saveSystemInfoUseCase;
 
   @BeforeEach
   void setUp() {
     when(this.getSystemInfoUseCase.execute(any(GetSystemInfoUseCase.In.class)))
         .thenReturn(new GetSystemInfoUseCase.Out(4, 1000, 500, 500, 2000));
+    when(this.saveSystemInfoUseCase.execute(any(SaveSystemInfoUseCase.In.class)))
+        .thenReturn(new SaveSystemInfoUseCase.Out("fileLocation"));
   }
 
   @Test

@@ -1,41 +1,37 @@
 package com.test.game;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
-import org.springframework.stereotype.Component;
-
 import com.test.UseCase;
 import com.test.domain.game.Game;
-import com.test.domain.game.GameLibrary;
+import com.test.domain.game.GameSaver;
+import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Component
 public class CreateGameUseCase extends UseCase<CreateGameUseCase.In, CreateGameUseCase.Out> {
 
-  private final GameLibrary gameLibrary;
+    private final GameSaver gameSaver;
 
-  public CreateGameUseCase(GameLibrary gameLibrary) {
-    this.gameLibrary = gameLibrary;
-  }
-
-  @Override
-  public Out execute(In input) {
-    if (this.gameLibrary.gameOfName(input.name()).isPresent()) {
-      throw new IllegalArgumentException("Game with name " + input.name() + " already exists");
+    public CreateGameUseCase(GameSaver gameSaver) {
+        this.gameSaver = gameSaver;
     }
 
-    Game createdGame = this.gameLibrary.create(new Game(input.name(), input.releaseDate(), input.price()));
+    @Override
+    public Out execute(In input) {
 
-    return new Out(
-        createdGame.getId().value(),
-        createdGame.getName().value(),
-        createdGame.getReleaseDate().value(),
-        createdGame.getPrice().value());
-  }
+        Game createdGame = this.gameSaver.saveGame(input.name(), input.releaseDate(), input.price());
 
-  public record In(String name, LocalDate releaseDate, BigDecimal price) {
-  }
+        return new Out(
+                createdGame.getId().value(),
+                createdGame.getName().value(),
+                createdGame.getReleaseDate().value(),
+                createdGame.getPrice().value());
+    }
 
-  public record Out(Long id, String name, LocalDate releaseDate, BigDecimal price) {
-  }
+    public record In(String name, LocalDate releaseDate, BigDecimal price) {
+    }
+
+    public record Out(Long id, String name, LocalDate releaseDate, BigDecimal price) {
+    }
 }

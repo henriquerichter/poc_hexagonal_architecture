@@ -3,6 +3,8 @@ package com.test.domain.game;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class Game {
 
   private GameId id;
@@ -49,5 +51,14 @@ public class Game {
 
   public void setPrice(Price price) {
     this.price = price;
+  }
+
+  public String toJson() {
+    return new ObjectMapper().createObjectNode()
+        .put("id", id.value())
+        .put("name", name.value())
+        .put("releaseDate", releaseDate.value().toString())
+        .put("price", price.value().toString())
+        .toString();
   }
 }

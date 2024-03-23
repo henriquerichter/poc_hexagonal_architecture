@@ -8,11 +8,9 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import com.test.domain.game.Game;
 
-@SpringBootTest
 public class GameEntityTest {
 
   private Long id;

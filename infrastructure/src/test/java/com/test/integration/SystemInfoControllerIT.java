@@ -1,28 +1,37 @@
 package com.test.integration;
 
-import static org.hamcrest.Matchers.matchesRegex;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
 
-@SpringBootTest(classes = com.test.Main.class)
-@AutoConfigureMockMvc
-public class SystemInfoControllerIT {
+import static org.hamcrest.Matchers.notNullValue;
 
-  @Autowired
-  private MockMvc mockMvc;
+public class SystemInfoControllerIT extends ResourcesIT {
 
-  @Test
-  void whenGetSystemInfo_thenStatus200() throws Exception {
-    mockMvc.perform(get("/system-info"))
-        .andExpect(status().isOk())
-        .andExpect(content().string(matchesRegex(
-            "\\{\"availableProcessors\":\\d+,\"totalMemory\":\\d+,\"freeMemory\":\\d+,\"allocatedMemory\":\\d+,\"maxMemory\":\\d+\\}")));
-  }
+    @Test
+    void whenGetSystemInfo_thenStatus200() {
+        // given
+        RequestSpecification request = RestAssured.given().contentType(ContentType.JSON);
+
+        // when
+        Response actualResponse = request.when().get("/system-info");
+
+        // then
+        actualResponse.then()
+                .statusCode(200)
+                .and()
+                .contentType(ContentType.JSON)
+                .and()
+                .body("availableProcessors", notNullValue())
+                .and()
+                .body("totalMemory", notNullValue())
+                .and()
+                .body("freeMemory", notNullValue())
+                .and()
+                .body("allocatedMemory", notNullValue())
+                .and()
+                .body("maxMemory", notNullValue());
+    }
 }

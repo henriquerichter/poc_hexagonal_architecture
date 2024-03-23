@@ -3,11 +3,9 @@ package com.test.services.system;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import com.test.domain.system.SystemInfo;
 
-@SpringBootTest
 public class SystemInfoRuntimeServiceTest {
 
   private final SystemInfoRuntimeService systemInfoRuntimeService = new SystemInfoRuntimeService();
