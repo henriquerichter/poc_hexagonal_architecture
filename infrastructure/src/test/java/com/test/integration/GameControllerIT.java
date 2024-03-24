@@ -1,7 +1,7 @@
 package com.test.integration;
 
-import com.test.jpa.repositories.GameJpaRepository;
-import com.test.services.game.GameStorageService;
+import com.test.adapters.jpa.repositories.GameJpaRepository;
+import com.test.ports.game.GameStoragePort;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -22,7 +22,7 @@ public class GameControllerIT extends ResourcesIT {
     private GameJpaRepository gameJpaRepository;
 
     @Autowired
-    private GameStorageService gameStorageService;
+    private GameStoragePort gameStoragePort;
 
     @Test
     void givenGame_whenCreateGame_thenStatus201() throws Exception {
@@ -47,7 +47,7 @@ public class GameControllerIT extends ResourcesIT {
                 .and()
                 .body("price", equalTo(1.11F));
 
-        File gameFile = gameStorageService.get("composter", "2.txt");
+        File gameFile = gameStoragePort.get("composter", "2.txt");
 
         assertEquals("{\"id\":2,\"name\":\"Game 2\",\"releaseDate\":\"2023-03-01\",\"price\":\"1.11\"}", Files.readString(gameFile.toPath()));
 

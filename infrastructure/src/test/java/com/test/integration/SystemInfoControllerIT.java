@@ -24,7 +24,7 @@ public class SystemInfoControllerIT extends ResourcesIT {
                 .and()
                 .contentType(ContentType.JSON)
                 .and()
-                .body("availableProcessors", notNullValue())
+                .body("cpuCount", notNullValue())
                 .and()
                 .body("totalMemory", notNullValue())
                 .and()
