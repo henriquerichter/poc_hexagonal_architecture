@@ -1,4 +1,4 @@
-FROM ghcr.io/graalvm/native-image-community:21 AS native-build
+FROM ghcr.io/graalvm/native-image-community:22 AS native-build
 
 ENV APP_HOME=/usr/app
 
