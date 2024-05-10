@@ -37,7 +37,7 @@ public class ResourcesIT {
 
         mySQLContainer.start();
 
-        localStackContainer = new LocalStackContainer(DockerImageName.parse("localstack/localstack:3.2.0"))
+        localStackContainer = new LocalStackContainer(DockerImageName.parse("localstack/localstack:3.4.0"))
                 .withServices(LocalStackContainer.Service.S3)
                 .withEnv("DEFAULT_REGION", "us-east-1");
 
