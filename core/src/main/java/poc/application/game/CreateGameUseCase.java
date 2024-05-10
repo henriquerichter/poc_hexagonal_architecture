@@ -1,11 +1,11 @@
 package poc.application.game;
 
-import poc.application.UseCase;
-import poc.domain.game.Game;
-import poc.ports.game.GameDatabase;
-import poc.ports.game.GameStorage;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
+import poc.application.UseCase;
+import poc.domain.game.Game;
+import poc.ports.out.game.GameDatabase;
+import poc.ports.out.game.GameStorage;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

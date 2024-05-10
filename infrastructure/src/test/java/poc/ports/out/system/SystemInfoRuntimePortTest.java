@@ -1,4 +1,4 @@
-package poc.ports.system;
+package poc.ports.out.system;
 
 import org.junit.jupiter.api.Test;
 import poc.domain.system.SystemInfo;

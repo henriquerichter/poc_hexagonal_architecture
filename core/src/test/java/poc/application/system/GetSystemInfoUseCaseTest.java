@@ -3,7 +3,7 @@ package poc.application.system;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import poc.domain.system.SystemInfo;
-import poc.ports.system.SystemInfoRuntime;
+import poc.ports.out.system.SystemInfoRuntime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;

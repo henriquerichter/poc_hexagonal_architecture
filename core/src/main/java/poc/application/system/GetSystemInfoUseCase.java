@@ -1,8 +1,8 @@
 package poc.application.system;
 
-import poc.application.UseCase;
-import poc.ports.system.SystemInfoRuntime;
 import org.springframework.stereotype.Component;
+import poc.application.UseCase;
+import poc.ports.out.system.SystemInfoRuntime;
 
 @Component
 public class GetSystemInfoUseCase extends UseCase<GetSystemInfoUseCase.In, GetSystemInfoUseCase.Out> {

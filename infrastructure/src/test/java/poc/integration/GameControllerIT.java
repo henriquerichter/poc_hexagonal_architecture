@@ -7,7 +7,7 @@ import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import poc.adapters.jpa.repositories.GameJpaRepository;
-import poc.ports.game.GameStoragePort;
+import poc.ports.out.game.GameStoragePort;
 
 import java.io.File;
 import java.nio.file.Files;

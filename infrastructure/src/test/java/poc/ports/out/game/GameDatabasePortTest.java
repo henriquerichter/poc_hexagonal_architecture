@@ -1,4 +1,4 @@
-package poc.ports.game;
+package poc.ports.out.game;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

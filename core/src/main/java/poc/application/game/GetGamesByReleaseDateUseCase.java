@@ -1,8 +1,8 @@
 package poc.application.game;
 
-import poc.application.UseCase;
-import poc.ports.game.GameDatabase;
 import org.springframework.stereotype.Component;
+import poc.application.UseCase;
+import poc.ports.out.game.GameDatabase;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
