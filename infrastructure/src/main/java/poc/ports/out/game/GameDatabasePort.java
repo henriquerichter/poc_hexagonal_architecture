@@ -1,4 +1,4 @@
-package poc.ports.game;
+package poc.ports.out.game;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;

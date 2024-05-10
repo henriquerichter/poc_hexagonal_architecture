@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import poc.adapters.jpa.entities.GameEntity;
 import poc.adapters.jpa.repositories.GameJpaRepository;
 import poc.domain.game.Game;
+import poc.ports.out.game.GameDatabasePort;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

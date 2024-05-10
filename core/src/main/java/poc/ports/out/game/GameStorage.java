@@ -1,4 +1,4 @@
-package poc.ports.game;
+package poc.ports.out.game;
 
 import java.io.File;
 

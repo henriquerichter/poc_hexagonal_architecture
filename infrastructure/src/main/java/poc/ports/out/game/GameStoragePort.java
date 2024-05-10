@@ -1,4 +1,4 @@
-package poc.ports.game;
+package poc.ports.out.game;
 
 import org.springframework.stereotype.Component;
 import poc.adapters.aws.s3.S3ClientWrapper;

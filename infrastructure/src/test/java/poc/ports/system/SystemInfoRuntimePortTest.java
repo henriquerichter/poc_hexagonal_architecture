@@ -2,6 +2,7 @@ package poc.ports.system;
 
 import org.junit.jupiter.api.Test;
 import poc.domain.system.SystemInfo;
+import poc.ports.out.system.SystemInfoRuntimePort;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 

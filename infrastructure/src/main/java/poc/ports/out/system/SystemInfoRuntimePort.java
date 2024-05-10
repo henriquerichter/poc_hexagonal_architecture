@@ -1,4 +1,4 @@
-package poc.ports.system;
+package poc.ports.out.system;
 
 import org.springframework.stereotype.Component;
 import poc.domain.system.SystemInfo;

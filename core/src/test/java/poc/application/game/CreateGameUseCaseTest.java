@@ -3,8 +3,8 @@ package poc.application.game;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import poc.domain.game.Game;
-import poc.ports.game.GameDatabase;
-import poc.ports.game.GameStorage;
+import poc.ports.out.game.GameDatabase;
+import poc.ports.out.game.GameStorage;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
