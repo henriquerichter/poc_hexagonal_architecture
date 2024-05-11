@@ -1,5 +1,6 @@
 package poc.adapters.rest.system;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ public class SystemInfoController {
         this.saveSystemInfo = saveSystemInfo;
     }
 
-    @GetMapping("/system-info")
+    @GetMapping(value = "/system-info", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> systemInfo() {
 
         String systemInfo = this.getSystemInfo.getSystemInfo();

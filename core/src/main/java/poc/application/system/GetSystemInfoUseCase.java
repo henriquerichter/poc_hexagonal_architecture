@@ -31,13 +31,15 @@ public class GetSystemInfoUseCase extends UseCase<GetSystemInfoUseCase.In, GetSy
 
         @Override
         public String toString() {
-            return "{" +
-                    "cpuCount=" + cpuCount +
-                    ", totalMemory=" + totalMemory +
-                    ", freeMemory=" + freeMemory +
-                    ", allocatedMemory=" + allocatedMemory +
-                    ", maxMemory=" + maxMemory +
-                    '}';
+            return """
+                    {
+                        "cpuCount": %d,
+                        "totalMemory": %d,
+                        "freeMemory": %d,
+                        "allocatedMemory": %d,
+                        "maxMemory": %d
+                    }
+                    """.formatted(cpuCount, totalMemory, freeMemory, allocatedMemory, maxMemory);
         }
     }
 }
