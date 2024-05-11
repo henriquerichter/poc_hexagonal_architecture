@@ -6,12 +6,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
-import poc.application.system.GetSystemInfoUseCase;
-import poc.application.system.SaveSystemInfoUseCase;
+import poc.ports.in.system.GetSystemInfo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -20,29 +18,20 @@ public class SystemInfoControllerTest {
     @InjectMocks
     private SystemInfoController systemInfoController;
     @Mock
-    private GetSystemInfoUseCase getSystemInfoUseCase;
-    @Mock
-    private SaveSystemInfoUseCase saveSystemInfoUseCase;
+    private GetSystemInfo getSystemInfo;
 
     @BeforeEach
     void setUp() {
-        when(this.getSystemInfoUseCase.execute(any(GetSystemInfoUseCase.In.class)))
-                .thenReturn(new GetSystemInfoUseCase.Out(4, 1000, 500, 500, 2000));
-        when(this.saveSystemInfoUseCase.execute(any(SaveSystemInfoUseCase.In.class)))
-                .thenReturn(new SaveSystemInfoUseCase.Out("fileLocation"));
+        when(this.getSystemInfo.getSystemInfo()).thenReturn("{cpuCount=24, totalMemory=84, freeMemory=39, allocatedMemory=44, maxMemory=4076}");
     }
 
     @Test
     void whenGetSystemInfo_thenSystemInfoIsReturned() {
         // when
-        ResponseEntity<GetSystemInfoUseCase.Out> actualSystemInfo = this.systemInfoController.systemInfo();
+        ResponseEntity<String> actualSystemInfo = this.systemInfoController.systemInfo();
 
         // then
         assertNotNull(actualSystemInfo);
-        assertEquals(4, actualSystemInfo.getBody().cpuCount());
-        assertEquals(1000, actualSystemInfo.getBody().totalMemory());
-        assertEquals(500, actualSystemInfo.getBody().freeMemory());
-        assertEquals(500, actualSystemInfo.getBody().allocatedMemory());
-        assertEquals(2000, actualSystemInfo.getBody().maxMemory());
+        assertEquals("{cpuCount=24, totalMemory=84, freeMemory=39, allocatedMemory=44, maxMemory=4076}", actualSystemInfo.getBody());
     }
 }

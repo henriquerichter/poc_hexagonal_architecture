@@ -28,5 +28,16 @@ public class GetSystemInfoUseCase extends UseCase<GetSystemInfoUseCase.In, GetSy
 
     public record Out(int cpuCount, long totalMemory, long freeMemory, long allocatedMemory,
                       long maxMemory) {
+
+        @Override
+        public String toString() {
+            return "{" +
+                    "cpuCount=" + cpuCount +
+                    ", totalMemory=" + totalMemory +
+                    ", freeMemory=" + freeMemory +
+                    ", allocatedMemory=" + allocatedMemory +
+                    ", maxMemory=" + maxMemory +
+                    '}';
+        }
     }
 }

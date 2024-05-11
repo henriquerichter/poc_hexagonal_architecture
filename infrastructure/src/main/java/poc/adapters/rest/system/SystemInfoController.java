@@ -2,36 +2,38 @@ package poc.adapters.rest.system;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import poc.application.system.GetSystemInfoUseCase;
-import poc.application.system.SaveSystemInfoUseCase;
+import poc.ports.in.system.GetSystemInfo;
+import poc.ports.in.system.SaveSystemInfo;
 
 @RestController
 public class SystemInfoController {
 
-    private final GetSystemInfoUseCase getSystemInfoUseCase;
-    private final SaveSystemInfoUseCase saveSystemInfoUseCase;
+    private final GetSystemInfo getSystemInfo;
+    private final SaveSystemInfo saveSystemInfo;
 
-    public SystemInfoController(GetSystemInfoUseCase getSystemInfoUseCase, SaveSystemInfoUseCase saveSystemInfoUseCase) {
-        this.getSystemInfoUseCase = getSystemInfoUseCase;
-        this.saveSystemInfoUseCase = saveSystemInfoUseCase;
+    public SystemInfoController(GetSystemInfo getSystemInfo, SaveSystemInfo saveSystemInfo) {
+        this.getSystemInfo = getSystemInfo;
+        this.saveSystemInfo = saveSystemInfo;
     }
 
     @GetMapping("/system-info")
-    public ResponseEntity<GetSystemInfoUseCase.Out> systemInfo() {
-        GetSystemInfoUseCase.In in = new GetSystemInfoUseCase.In();
+    public ResponseEntity<String> systemInfo() {
 
-        GetSystemInfoUseCase.Out out = this.getSystemInfoUseCase.execute(in);
+        String systemInfo = this.getSystemInfo.getSystemInfo();
 
-        SaveSystemInfoUseCase.Out fileOut = this.saveSystemInfoUseCase.execute(new SaveSystemInfoUseCase.In(
-                out.cpuCount(),
-                out.totalMemory(),
-                out.freeMemory(),
-                out.allocatedMemory(),
-                out.maxMemory()));
+        System.out.println("System info: " + systemInfo);
 
-        System.out.println("fileLocation: " + fileOut.fileLocation());
+        return ResponseEntity.ok().body(systemInfo);
+    }
 
-        return ResponseEntity.ok().body(out);
+    @PostMapping("/system-info")
+    public ResponseEntity<String> saveSystemInfo() {
+        String systemInfo = this.saveSystemInfo.saveSystemInfo();
+
+        System.out.println("System info saved: " + systemInfo);
+
+        return ResponseEntity.ok().body(systemInfo);
     }
 }

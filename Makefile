@@ -2,7 +2,7 @@ docker-up:
 	docker-compose build; docker-compose up -d
 
 docker-down:
-	docker-compose down
+	docker-compose down -v
 
 docker-build:
 	docker build -t poc:latest .
