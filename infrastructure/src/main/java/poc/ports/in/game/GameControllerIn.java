@@ -8,6 +8,7 @@ import poc.application.game.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -33,6 +34,10 @@ public class GameControllerIn {
     }
 
     public CreatedGameDTO createGame(String name, LocalDate releaseDate, BigDecimal price) {
+        Objects.requireNonNull(name, "name cannot be null");
+        Objects.requireNonNull(releaseDate, "releaseDate cannot be null");
+        Objects.requireNonNull(price, "price cannot be null");
+
         CreateGameUseCase.In in = new CreateGameUseCase.In(name, releaseDate, price);
 
         CreateGameUseCase.Out out = createGameUseCase.execute(in);
@@ -41,6 +46,8 @@ public class GameControllerIn {
     }
 
     public Optional<String> getGameById(Long id) {
+        Objects.requireNonNull(id, "id cannot be null");
+
         GetGameByIdUseCase.In in = new GetGameByIdUseCase.In(id);
 
         Optional<GetGameByIdUseCase.Out> out = getGameByIdUseCase.execute(in);
@@ -49,6 +56,8 @@ public class GameControllerIn {
     }
 
     public Optional<String> getGameByName(String name) {
+        Objects.requireNonNull(name, "name cannot be null");
+
         GetGameByNameUseCase.In in = new GetGameByNameUseCase.In(name);
 
         Optional<GetGameByNameUseCase.Out> out = this.getGameByNameUseCase.execute(in);
@@ -57,6 +66,8 @@ public class GameControllerIn {
     }
 
     public String getGameByReleaseDate(LocalDate releaseDate) {
+        Objects.requireNonNull(releaseDate, "releaseDate cannot be null");
+
         GetGamesByReleaseDateUseCase.In in = new GetGamesByReleaseDateUseCase.In(releaseDate);
 
         List<GetGamesByReleaseDateUseCase.Out> out = this.getGamesByReleaseDateUseCase.execute(in);
@@ -65,6 +76,8 @@ public class GameControllerIn {
     }
 
     public String getGamesByPrice(BigDecimal price) {
+        Objects.requireNonNull(price, "price cannot be null");
+
         GetGamesByPriceUseCase.In in = new GetGamesByPriceUseCase.In(price);
 
         List<GetGamesByPriceUseCase.Out> out = this.getGamesByPriceUseCase.execute(in);
