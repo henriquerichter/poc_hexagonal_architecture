@@ -3,35 +3,31 @@ package poc.adapters.rest.system;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import poc.ports.in.system.GetSystemInfo;
-import poc.ports.in.system.SaveSystemInfo;
+import poc.ports.in.system.SystemInfoControllerIn;
 
 @RestController
 public class SystemInfoController {
 
-    private final GetSystemInfo getSystemInfo;
-    private final SaveSystemInfo saveSystemInfo;
+    private final SystemInfoControllerIn systemInfoControllerIn;
 
-    public SystemInfoController(GetSystemInfo getSystemInfo, SaveSystemInfo saveSystemInfo) {
-        this.getSystemInfo = getSystemInfo;
-        this.saveSystemInfo = saveSystemInfo;
+    public SystemInfoController(SystemInfoControllerIn systemInfoControllerIn) {
+        this.systemInfoControllerIn = systemInfoControllerIn;
     }
 
     @GetMapping(value = "/system-info", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> systemInfo() {
 
-        String systemInfo = this.getSystemInfo.getSystemInfo();
+        String systemInfo = this.systemInfoControllerIn.getSystemInfo();
 
         System.out.println("System info: " + systemInfo);
 
         return ResponseEntity.ok().body(systemInfo);
     }
 
-    @PostMapping("/system-info")
+    @GetMapping("/system-info/save")
     public ResponseEntity<String> saveSystemInfo() {
-        String systemInfo = this.saveSystemInfo.saveSystemInfo();
+        String systemInfo = this.systemInfoControllerIn.saveSystemInfo();
 
         System.out.println("System info saved: " + systemInfo);
 

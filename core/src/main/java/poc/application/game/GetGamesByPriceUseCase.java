@@ -2,7 +2,7 @@ package poc.application.game;
 
 import org.springframework.stereotype.Component;
 import poc.application.UseCase;
-import poc.ports.out.game.GameDatabase;
+import poc.ports.out.game.IGameDatabaseOut;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -11,15 +11,15 @@ import java.util.List;
 @Component
 public class GetGamesByPriceUseCase extends UseCase<GetGamesByPriceUseCase.In, List<GetGamesByPriceUseCase.Out>> {
 
-    private final GameDatabase gameDatabase;
+    private final IGameDatabaseOut gameDatabaseOut;
 
-    public GetGamesByPriceUseCase(GameDatabase gameDatabase) {
-        this.gameDatabase = gameDatabase;
+    public GetGamesByPriceUseCase(IGameDatabaseOut gameDatabaseOut) {
+        this.gameDatabaseOut = gameDatabaseOut;
     }
 
     @Override
     public List<Out> execute(In input) {
-        return this.gameDatabase.gamesOfPrice(input.price())
+        return this.gameDatabaseOut.gamesOfPrice(input.price())
                 .stream()
                 .map(game -> new Out(
                         game.getId().value(),

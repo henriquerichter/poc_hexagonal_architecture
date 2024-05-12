@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import poc.domain.system.SystemInfo;
 
 @Component
-public class SystemInfoRuntimePort implements SystemInfoRuntime {
+public class SystemInfoRuntimeOut implements ISystemInfoRuntimeOut {
 
     @Override
     public SystemInfo getSystemInfo() {

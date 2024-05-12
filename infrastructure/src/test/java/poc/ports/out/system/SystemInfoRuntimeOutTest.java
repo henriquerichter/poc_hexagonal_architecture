@@ -2,18 +2,17 @@ package poc.ports.out.system;
 
 import org.junit.jupiter.api.Test;
 import poc.domain.system.SystemInfo;
-import poc.ports.out.system.SystemInfoRuntimePort;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class SystemInfoRuntimePortTest {
+public class SystemInfoRuntimeOutTest {
 
-    private final SystemInfoRuntimePort systemInfoRuntimePort = new SystemInfoRuntimePort();
+    private final SystemInfoRuntimeOut systemInfoRuntimeOut = new SystemInfoRuntimeOut();
 
     @Test
     void whenGetSystemInfo_thenSystemInfoIsReturned() {
         // when
-        SystemInfo actualSystemInfo = this.systemInfoRuntimePort.getSystemInfo();
+        SystemInfo actualSystemInfo = this.systemInfoRuntimeOut.getSystemInfo();
 
         // then
         assertNotNull(actualSystemInfo);

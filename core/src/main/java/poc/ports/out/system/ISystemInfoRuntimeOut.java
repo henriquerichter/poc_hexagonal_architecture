@@ -2,7 +2,7 @@ package poc.ports.out.system;
 
 import poc.domain.system.SystemInfo;
 
-public interface SystemInfoRuntime {
+public interface ISystemInfoRuntimeOut {
 
     SystemInfo getSystemInfo();
 }

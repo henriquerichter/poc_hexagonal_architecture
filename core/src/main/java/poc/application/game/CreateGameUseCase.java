@@ -4,8 +4,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 import poc.application.UseCase;
 import poc.domain.game.Game;
-import poc.ports.out.game.GameDatabase;
-import poc.ports.out.game.GameStorage;
+import poc.ports.out.game.IGameDatabaseOut;
+import poc.ports.out.game.IGameStorageOut;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -13,17 +13,17 @@ import java.time.LocalDate;
 @Component
 public class CreateGameUseCase extends UseCase<CreateGameUseCase.In, CreateGameUseCase.Out> {
 
-    private final GameDatabase gameDatabase;
-    private final GameStorage gameStorage;
+    private final IGameDatabaseOut gameDatabaseOut;
+    private final IGameStorageOut gameStorage;
 
-    public CreateGameUseCase(GameDatabase gameDatabase, GameStorage gameStorage) {
-        this.gameDatabase = gameDatabase;
+    public CreateGameUseCase(IGameDatabaseOut gameDatabaseOut, IGameStorageOut gameStorage) {
+        this.gameDatabaseOut = gameDatabaseOut;
         this.gameStorage = gameStorage;
     }
 
     @Override
     public Out execute(In input) {
-        if (this.gameDatabase.gameOfName(input.name()).isPresent()) {
+        if (this.gameDatabaseOut.gameOfName(input.name()).isPresent()) {
             throw new IllegalArgumentException("Game with name " + input.name() + " already exists");
         }
 
@@ -38,7 +38,7 @@ public class CreateGameUseCase extends UseCase<CreateGameUseCase.In, CreateGameU
 
     @Transactional
     private Game save(String name, LocalDate releaseDate, BigDecimal price) {
-        Game createdGame = this.gameDatabase.save(new Game(name, releaseDate, price));
+        Game createdGame = this.gameDatabaseOut.save(new Game(name, releaseDate, price));
 
         String buketName = "composter";
         String fileName = createdGame.getId().value() + ".txt";

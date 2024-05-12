@@ -3,7 +3,7 @@ package poc.application.system;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import poc.domain.system.SystemInfo;
-import poc.ports.out.system.SystemInfoRuntime;
+import poc.ports.out.system.ISystemInfoRuntimeOut;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -12,11 +12,11 @@ import static org.mockito.Mockito.when;
 public class GetSystemInfoUseCaseTest {
 
     private GetSystemInfoUseCase getSystemInfoUseCase;
-    private SystemInfoRuntime systemInfoRuntime;
+    private ISystemInfoRuntimeOut systemInfoRuntime;
 
     @BeforeEach
     void setUp() {
-        this.systemInfoRuntime = mock(SystemInfoRuntime.class);
+        this.systemInfoRuntime = mock(ISystemInfoRuntimeOut.class);
         when(this.systemInfoRuntime.getSystemInfo())
                 .thenReturn(new SystemInfo(4, 100000000, 500000000, 600000000, 700000000));
         this.getSystemInfoUseCase = new GetSystemInfoUseCase(this.systemInfoRuntime);

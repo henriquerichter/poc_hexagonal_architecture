@@ -13,11 +13,11 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Component
-public class GameDatabasePort implements GameDatabase {
+public class GameDatabaseOut implements IGameDatabaseOut {
 
     private final GameJpaRepository gameJpaRepository;
 
-    public GameDatabasePort(GameJpaRepository gameJpaRepository) {
+    public GameDatabaseOut(GameJpaRepository gameJpaRepository) {
         this.gameJpaRepository = gameJpaRepository;
     }
 

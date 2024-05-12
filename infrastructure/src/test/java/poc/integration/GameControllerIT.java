@@ -7,7 +7,7 @@ import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import poc.adapters.jpa.repositories.GameJpaRepository;
-import poc.ports.out.game.GameStoragePort;
+import poc.ports.out.game.GameStorageOut;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -22,7 +22,7 @@ public class GameControllerIT extends ResourcesIT {
     private GameJpaRepository gameJpaRepository;
 
     @Autowired
-    private GameStoragePort gameStoragePort;
+    private GameStorageOut gameStorageOut;
 
     @Test
     void givenGame_whenCreateGame_thenStatus201() throws Exception {
@@ -47,7 +47,7 @@ public class GameControllerIT extends ResourcesIT {
                 .and()
                 .body("price", equalTo(1.11F));
 
-        File gameFile = gameStoragePort.get("composter", "2.txt");
+        File gameFile = gameStorageOut.get("composter", "2.txt");
 
         assertEquals("{\"id\":2,\"name\":\"Game 2\",\"releaseDate\":\"2023-03-01\",\"price\":\"1.11\"}", Files.readString(gameFile.toPath()));
 

@@ -2,7 +2,7 @@ package poc.ports.out.game;
 
 import java.io.File;
 
-public interface GameStorage {
+public interface IGameStorageOut {
 
     void save(String bucketName, String key, String content);
 

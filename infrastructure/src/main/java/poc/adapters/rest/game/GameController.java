@@ -1,96 +1,69 @@
 package poc.adapters.rest.game;
 
-import org.springframework.aot.hint.annotation.RegisterReflectionForBinding;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import poc.adapters.dtos.CreatedGameDTO;
 import poc.adapters.dtos.NewGameDTO;
-import poc.application.game.*;
+import poc.ports.in.game.GameControllerIn;
 
 import java.math.BigDecimal;
 import java.net.URI;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/game")
 public class GameController {
 
-    private final CreateGameUseCase createGameUseCase;
-    private final GetGameByIdUseCase getGameByIdUseCase;
-    private final GetGameByNameUseCase getGameByNameUseCase;
-    private final GetGamesByReleaseDateUseCase getGamesByReleaseDateUseCase;
-    private final GetGamesByPriceUseCase getGameByPriceUseCase;
-    private final GetGamesUseCase getGamesUseCase;
+    private final GameControllerIn gameControllerIn;
 
-    public GameController(CreateGameUseCase createGameUseCase, GetGameByIdUseCase getGameByIdUseCase,
-                          GetGameByNameUseCase getGameByNameUseCase, GetGamesByReleaseDateUseCase getGamesByReleaseDateUseCase,
-                          GetGamesByPriceUseCase getGameByPriceUseCase, GetGamesUseCase getGamesUseCase) {
-
-        this.createGameUseCase = createGameUseCase;
-        this.getGameByIdUseCase = getGameByIdUseCase;
-        this.getGameByNameUseCase = getGameByNameUseCase;
-        this.getGameByPriceUseCase = getGameByPriceUseCase;
-        this.getGamesByReleaseDateUseCase = getGamesByReleaseDateUseCase;
-        this.getGamesUseCase = getGamesUseCase;
+    public GameController(GameControllerIn gameControllerIn) {
+        this.gameControllerIn = gameControllerIn;
     }
 
-    @PostMapping
-    @RegisterReflectionForBinding(classes = {CreateGameUseCase.Out.class}) // native
-    public ResponseEntity<?> create(@RequestBody NewGameDTO newGameDTO) {
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> create(@RequestBody NewGameDTO newGameDTO) {
         try {
-            CreateGameUseCase.In in = new CreateGameUseCase.In(newGameDTO.name(), newGameDTO.releaseDate(),
-                    newGameDTO.price());
+            CreatedGameDTO out = this.gameControllerIn.createGame(newGameDTO.name(), newGameDTO.releaseDate(), newGameDTO.price());
 
-            CreateGameUseCase.Out output = this.createGameUseCase.execute(in);
-
-            return ResponseEntity.created(URI.create("/game/" + output.id())).body(output);
+            return ResponseEntity.created(URI.create("/game/" + out.id())).body(out.toString());
         } catch (IllegalArgumentException e) {
             return ResponseEntity.unprocessableEntity().body(e.getMessage());
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<GetGameByIdUseCase.Out> getById(@PathVariable Long id) {
-        GetGameByIdUseCase.In in = new GetGameByIdUseCase.In(id);
-
-        Optional<GetGameByIdUseCase.Out> out = this.getGameByIdUseCase.execute(in);
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getById(@PathVariable Long id) {
+        Optional<String> out = this.gameControllerIn.getGameById(id);
 
         return out.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/name/{name}")
-    public ResponseEntity<GetGameByNameUseCase.Out> getByName(@PathVariable String name) {
-        GetGameByNameUseCase.In in = new GetGameByNameUseCase.In(name);
-
-        Optional<GetGameByNameUseCase.Out> out = this.getGameByNameUseCase.execute(in);
+    @GetMapping(value = "/name/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getByName(@PathVariable String name) {
+        Optional<String> out = this.gameControllerIn.getGameByName(name);
 
         return out.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/releaseDate/{releaseDate}")
-    public ResponseEntity<List<GetGamesByReleaseDateUseCase.Out>> getByReleaseDate(@PathVariable LocalDate releaseDate) {
-        GetGamesByReleaseDateUseCase.In in = new GetGamesByReleaseDateUseCase.In(releaseDate);
-
-        List<GetGamesByReleaseDateUseCase.Out> out = this.getGamesByReleaseDateUseCase.execute(in);
+    @GetMapping(value = "/releaseDate/{releaseDate}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getByReleaseDate(@PathVariable LocalDate releaseDate) {
+        String out = this.gameControllerIn.getGameByReleaseDate(releaseDate);
 
         return ResponseEntity.ok(out);
     }
 
-    @GetMapping("/price/{price}")
-    public ResponseEntity<List<GetGamesByPriceUseCase.Out>> getByPrice(@PathVariable BigDecimal price) {
-        GetGamesByPriceUseCase.In in = new GetGamesByPriceUseCase.In(price);
-
-        List<GetGamesByPriceUseCase.Out> out = getGameByPriceUseCase.execute(in);
+    @GetMapping(value = "/price/{price}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getByPrice(@PathVariable BigDecimal price) {
+        String out = this.gameControllerIn.getGamesByPrice(price);
 
         return ResponseEntity.ok(out);
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<GetGamesUseCase.Out>> getAll() {
-        GetGamesUseCase.In in = new GetGamesUseCase.In();
-
-        List<GetGamesUseCase.Out> out = this.getGamesUseCase.execute(in);
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getAll() {
+        String out = this.gameControllerIn.getAll();
 
         return ResponseEntity.ok(out);
     }

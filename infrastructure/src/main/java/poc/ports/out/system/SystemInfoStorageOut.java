@@ -6,11 +6,11 @@ import poc.adapters.aws.s3.S3ClientWrapper;
 import java.io.File;
 
 @Component
-public class SystemInfoStoragePort implements SystemInfoStorage {
+public class SystemInfoStorageOut implements ISystemInfoStorageOut {
 
     private final S3ClientWrapper s3ClientWrapper;
 
-    public SystemInfoStoragePort(S3ClientWrapper s3ClientWrapper) {
+    public SystemInfoStorageOut(S3ClientWrapper s3ClientWrapper) {
         this.s3ClientWrapper = s3ClientWrapper;
     }
 

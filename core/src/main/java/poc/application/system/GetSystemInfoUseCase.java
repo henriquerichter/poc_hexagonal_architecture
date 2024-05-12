@@ -2,14 +2,14 @@ package poc.application.system;
 
 import org.springframework.stereotype.Component;
 import poc.application.UseCase;
-import poc.ports.out.system.SystemInfoRuntime;
+import poc.ports.out.system.ISystemInfoRuntimeOut;
 
 @Component
 public class GetSystemInfoUseCase extends UseCase<GetSystemInfoUseCase.In, GetSystemInfoUseCase.Out> {
 
-    private final SystemInfoRuntime systemInfoRuntime;
+    private final ISystemInfoRuntimeOut systemInfoRuntime;
 
-    public GetSystemInfoUseCase(SystemInfoRuntime systemInfoRuntime) {
+    public GetSystemInfoUseCase(ISystemInfoRuntimeOut systemInfoRuntime) {
         this.systemInfoRuntime = systemInfoRuntime;
     }
 
@@ -28,18 +28,5 @@ public class GetSystemInfoUseCase extends UseCase<GetSystemInfoUseCase.In, GetSy
 
     public record Out(int cpuCount, long totalMemory, long freeMemory, long allocatedMemory,
                       long maxMemory) {
-
-        @Override
-        public String toString() {
-            return """
-                    {
-                        "cpuCount": %d,
-                        "totalMemory": %d,
-                        "freeMemory": %d,
-                        "allocatedMemory": %d,
-                        "maxMemory": %d
-                    }
-                    """.formatted(cpuCount, totalMemory, freeMemory, allocatedMemory, maxMemory);
-        }
     }
 }

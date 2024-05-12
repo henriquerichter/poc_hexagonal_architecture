@@ -2,20 +2,20 @@ package poc.application.system;
 
 import org.springframework.stereotype.Component;
 import poc.application.UseCase;
-import poc.ports.out.system.SystemInfoStorage;
+import poc.ports.out.system.ISystemInfoStorageOut;
 
 @Component
 public class SaveSystemInfoUseCase extends UseCase<SaveSystemInfoUseCase.In, SaveSystemInfoUseCase.Out> {
 
-    private final SystemInfoStorage systemInfoStorage;
+    private final ISystemInfoStorageOut systemInfoStorageOut;
 
-    public SaveSystemInfoUseCase(SystemInfoStorage systemInfoStorage) {
-        this.systemInfoStorage = systemInfoStorage;
+    public SaveSystemInfoUseCase(ISystemInfoStorageOut systemInfoStorageOut) {
+        this.systemInfoStorageOut = systemInfoStorageOut;
     }
 
     @Override
     public Out execute(In input) {
-        String fileLocation = this.systemInfoStorage.save(
+        String fileLocation = this.systemInfoStorageOut.save(
                 input.cpuCount(),
                 input.totalMemory(),
                 input.freeMemory(),

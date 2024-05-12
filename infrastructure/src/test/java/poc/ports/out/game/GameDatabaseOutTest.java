@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import poc.adapters.jpa.entities.GameEntity;
 import poc.adapters.jpa.repositories.GameJpaRepository;
 import poc.domain.game.Game;
-import poc.ports.out.game.GameDatabasePort;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -21,10 +20,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class GameDatabasePortTest {
+public class GameDatabaseOutTest {
 
     @InjectMocks
-    private GameDatabasePort gameDatabasePort;
+    private GameDatabaseOut gameDatabaseOut;
     @Mock
     private GameJpaRepository gameJpaRepository;
 
@@ -54,7 +53,7 @@ public class GameDatabasePortTest {
         Long id = this.gameEntity.getId();
 
         // when
-        Optional<Game> actualGame = this.gameDatabasePort.gameOfId(id);
+        Optional<Game> actualGame = this.gameDatabaseOut.gameOfId(id);
 
         // then
         assertTrue(actualGame.isPresent());
@@ -73,7 +72,7 @@ public class GameDatabasePortTest {
 
         // when
         NullPointerException nullPointerException = assertThrows(NullPointerException.class,
-                () -> this.gameDatabasePort.gameOfId(id));
+                () -> this.gameDatabaseOut.gameOfId(id));
 
         // then
         assertEquals("id cannot be null", nullPointerException.getMessage());
@@ -85,7 +84,7 @@ public class GameDatabasePortTest {
         String name = this.gameEntity.getName();
 
         // when
-        Optional<Game> actualGame = this.gameDatabasePort.gameOfName(name);
+        Optional<Game> actualGame = this.gameDatabaseOut.gameOfName(name);
 
         // then
         assertTrue(actualGame.isPresent());
@@ -104,7 +103,7 @@ public class GameDatabasePortTest {
 
         // when
         NullPointerException nullPointerException = assertThrows(NullPointerException.class,
-                () -> this.gameDatabasePort.gameOfName(name));
+                () -> this.gameDatabaseOut.gameOfName(name));
 
         // then
         assertEquals("name cannot be null", nullPointerException.getMessage());
@@ -116,7 +115,7 @@ public class GameDatabasePortTest {
         LocalDate releaseDate = this.gameEntity.getReleaseDate();
 
         // when
-        List<Game> actualGames = this.gameDatabasePort.gamesOfReleaseDate(releaseDate);
+        List<Game> actualGames = this.gameDatabaseOut.gamesOfReleaseDate(releaseDate);
 
         // then
         assertEquals(1, actualGames.size());
@@ -135,7 +134,7 @@ public class GameDatabasePortTest {
 
         // when
         NullPointerException nullPointerException = assertThrows(NullPointerException.class,
-                () -> this.gameDatabasePort.gamesOfReleaseDate(releaseDate));
+                () -> this.gameDatabaseOut.gamesOfReleaseDate(releaseDate));
 
         // then
         assertEquals("releaseDate cannot be null", nullPointerException.getMessage());
@@ -147,7 +146,7 @@ public class GameDatabasePortTest {
         BigDecimal price = this.gameEntity.getPrice();
 
         // when
-        List<Game> actualGames = this.gameDatabasePort.gamesOfPrice(price);
+        List<Game> actualGames = this.gameDatabaseOut.gamesOfPrice(price);
 
         // then
         assertEquals(1, actualGames.size());
@@ -166,7 +165,7 @@ public class GameDatabasePortTest {
 
         // when
         NullPointerException nullPointerException = assertThrows(NullPointerException.class,
-                () -> this.gameDatabasePort.gamesOfPrice(price));
+                () -> this.gameDatabaseOut.gamesOfPrice(price));
 
         // then
         assertEquals("price cannot be null", nullPointerException.getMessage());
@@ -175,7 +174,7 @@ public class GameDatabasePortTest {
     @Test
     void whenGames_thenReturnGames() {
         // when
-        List<Game> actualGames = this.gameDatabasePort.games();
+        List<Game> actualGames = this.gameDatabaseOut.games();
 
         // then
         assertEquals(1, actualGames.size());
@@ -193,7 +192,7 @@ public class GameDatabasePortTest {
         Game game = this.gameEntity.toGame();
 
         // when
-        Game actualGame = this.gameDatabasePort.save(game);
+        Game actualGame = this.gameDatabaseOut.save(game);
 
         // then
         assertEquals(this.gameEntity.getId(), actualGame.getId().value());
@@ -211,7 +210,7 @@ public class GameDatabasePortTest {
 
         // when
         NullPointerException nullPointerException = assertThrows(NullPointerException.class,
-                () -> this.gameDatabasePort.save(game));
+                () -> this.gameDatabaseOut.save(game));
 
         // then
         assertEquals("game cannot be null", nullPointerException.getMessage());
@@ -223,7 +222,7 @@ public class GameDatabasePortTest {
         Game game = this.gameEntity.toGame();
 
         // when
-        Game actualGame = this.gameDatabasePort.update(game);
+        Game actualGame = this.gameDatabaseOut.update(game);
 
         // then
         assertEquals(this.gameEntity.getId(), actualGame.getId().value());
@@ -241,7 +240,7 @@ public class GameDatabasePortTest {
 
         // when
         NullPointerException nullPointerException = assertThrows(NullPointerException.class,
-                () -> this.gameDatabasePort.update(game));
+                () -> this.gameDatabaseOut.update(game));
 
         // then
         assertEquals("game cannot be null", nullPointerException.getMessage());
@@ -253,7 +252,7 @@ public class GameDatabasePortTest {
         Long id = this.gameEntity.getId();
 
         // when
-        this.gameDatabasePort.delete(id);
+        this.gameDatabaseOut.delete(id);
 
         // then
         verify(this.gameJpaRepository).deleteById(id);
@@ -266,7 +265,7 @@ public class GameDatabasePortTest {
 
         // when
         NullPointerException nullPointerException = assertThrows(NullPointerException.class,
-                () -> this.gameDatabasePort.delete(id));
+                () -> this.gameDatabaseOut.delete(id));
 
         // then
         assertEquals("id cannot be null", nullPointerException.getMessage());

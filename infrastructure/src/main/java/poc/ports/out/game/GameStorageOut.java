@@ -7,11 +7,11 @@ import java.io.File;
 import java.util.Objects;
 
 @Component
-public class GameStoragePort implements GameStorage {
+public class GameStorageOut implements IGameStorageOut {
 
     private final S3ClientWrapper s3ClientWrapper;
 
-    public GameStoragePort(S3ClientWrapper s3ClientWrapper) {
+    public GameStorageOut(S3ClientWrapper s3ClientWrapper) {
         this.s3ClientWrapper = s3ClientWrapper;
     }
 

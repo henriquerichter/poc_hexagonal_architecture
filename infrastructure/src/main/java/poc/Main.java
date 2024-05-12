@@ -14,7 +14,6 @@ public class Main {
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
 
-        LOG.info("main()");
         LOG.info("Arguments: " + ManagementFactory.getRuntimeMXBean().getInputArguments());
     }
 }

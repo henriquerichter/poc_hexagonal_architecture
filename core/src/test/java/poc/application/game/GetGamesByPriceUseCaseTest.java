@@ -3,7 +3,7 @@ package poc.application.game;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import poc.domain.game.Game;
-import poc.ports.out.game.GameDatabase;
+import poc.ports.out.game.IGameDatabaseOut;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,14 +16,14 @@ import static org.mockito.Mockito.when;
 public class GetGamesByPriceUseCaseTest {
 
     private GetGamesByPriceUseCase getGamesByPriceUseCase;
-    private GameDatabase gameDatabase;
+    private IGameDatabaseOut IGameDatabaseOut;
 
     @BeforeEach
     void setUp() {
-        this.gameDatabase = mock(GameDatabase.class);
-        when(this.gameDatabase.gamesOfPrice(new BigDecimal("100.00")))
+        this.IGameDatabaseOut = mock(IGameDatabaseOut.class);
+        when(this.IGameDatabaseOut.gamesOfPrice(new BigDecimal("100.00")))
                 .thenReturn(List.of(new Game(2L, "Game 2", LocalDate.of(2021, 2, 1), new BigDecimal("100.00"))));
-        this.getGamesByPriceUseCase = new GetGamesByPriceUseCase(this.gameDatabase);
+        this.getGamesByPriceUseCase = new GetGamesByPriceUseCase(this.IGameDatabaseOut);
     }
 
     @Test

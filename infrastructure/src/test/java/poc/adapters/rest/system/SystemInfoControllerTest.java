@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
-import poc.ports.in.system.GetSystemInfo;
+import poc.ports.in.system.SystemInfoControllerIn;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -18,11 +18,11 @@ public class SystemInfoControllerTest {
     @InjectMocks
     private SystemInfoController systemInfoController;
     @Mock
-    private GetSystemInfo getSystemInfo;
+    private SystemInfoControllerIn systemInfoControllerIn;
 
     @BeforeEach
     void setUp() {
-        when(this.getSystemInfo.getSystemInfo()).thenReturn("{cpuCount=24, totalMemory=84, freeMemory=39, allocatedMemory=44, maxMemory=4076}");
+        when(this.systemInfoControllerIn.getSystemInfo()).thenReturn("{cpuCount=24, totalMemory=84, freeMemory=39, allocatedMemory=44, maxMemory=4076}");
     }
 
     @Test

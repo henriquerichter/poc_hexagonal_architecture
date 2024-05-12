@@ -2,7 +2,7 @@ package poc.ports.out.system;
 
 import java.io.File;
 
-public interface SystemInfoStorage {
+public interface ISystemInfoStorageOut {
 
     String save(int cpuCount, long totalMemory, long freeMemory, long allocatedMemory, long maxMemory);
 

@@ -3,8 +3,8 @@ package poc.application.game;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import poc.domain.game.Game;
-import poc.ports.out.game.GameDatabase;
-import poc.ports.out.game.GameStorage;
+import poc.ports.out.game.IGameDatabaseOut;
+import poc.ports.out.game.IGameStorageOut;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,17 +17,17 @@ import static org.mockito.Mockito.*;
 public class CreateGameUseCaseTest {
 
     private CreateGameUseCase createGameUseCase;
-    private GameDatabase gameDatabase;
-    private GameStorage gameStorage;
+    private IGameDatabaseOut IGameDatabaseOut;
+    private IGameStorageOut gameStorage;
 
     @BeforeEach
     void setUp() {
         Game game = new Game(1L, "Game 1", LocalDate.of(2021, 1, 1), new BigDecimal("100.00"));
-        this.gameDatabase = mock(GameDatabase.class);
-        this.gameStorage = mock(GameStorage.class);
-        when(this.gameDatabase.save(any(Game.class))).thenReturn(new Game(2L, "Game 1", LocalDate.of(2021, 1, 1), new BigDecimal("100.00")));
+        this.IGameDatabaseOut = mock(IGameDatabaseOut.class);
+        this.gameStorage = mock(IGameStorageOut.class);
+        when(this.IGameDatabaseOut.save(any(Game.class))).thenReturn(new Game(2L, "Game 1", LocalDate.of(2021, 1, 1), new BigDecimal("100.00")));
         doNothing().when(this.gameStorage).save("composter", game.getId().value() + ".txt", game.toJson());
-        this.createGameUseCase = new CreateGameUseCase(this.gameDatabase, this.gameStorage);
+        this.createGameUseCase = new CreateGameUseCase(this.IGameDatabaseOut, this.gameStorage);
     }
 
     @Test
@@ -48,7 +48,7 @@ public class CreateGameUseCaseTest {
     @Test
     void givenInWithExistingGameName_whenExecute_thenThrowIllegalArgumentException() {
         // given
-        when(this.gameDatabase.save(any(Game.class))).thenThrow(new IllegalArgumentException("Game with name Game 1 already exists"));
+        when(this.IGameDatabaseOut.save(any(Game.class))).thenThrow(new IllegalArgumentException("Game with name Game 1 already exists"));
         CreateGameUseCase.In in = new CreateGameUseCase.In("Game 1", LocalDate.of(2021, 1, 1), new BigDecimal("100.00"));
 
         // when
